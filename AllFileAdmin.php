@@ -15,10 +15,10 @@ if ($conn->connect_error) {
 }
 
 $user_from_form = $_POST["username"];
-$comments = $_POST["comments"];
+$comments_form = $_POST["comments"];
 $date = date("Y-m-d H:i:s");
 
-$sql = "INSERT INTO comments (username, comments, date) VALUES ('$user_from_form', '$comments', '$date')";
+$sql = "INSERT INTO comments (username, comments, date) VALUES ('$user_from_form', '$comments_form', '$date')";
 
 
 // выполнение запроса
@@ -62,7 +62,17 @@ $conn->close();
                 echo "<h2>Список файлов:</h2>";
                 echo "<ul>";
                 foreach ($files as $file) {
-                    echo "<li><a href='uploads/$file'>$file</a> <button onclick='showForm()'>Add Comment</button></li>";
+                    echo "<li>";
+                    echo "<a href='uploads/$file'>$file</a>";
+                    echo "<button onclick='showForm(\"$file\")'>Добавить комментарий</button>";
+                    echo "<form id='comment-form-$file' action='' method='post' style='display: none;'>";
+                    echo "<input type='text' name='username' placeholder='Имя пользователя'>";
+                    echo "<textarea name='comments' placeholder='Комментарий'></textarea>";
+//                    echo "<input type='text' name='comments' placeholder='Comment'>";
+                    echo "<button type='submit'>Отправить</button>";
+                    echo "<button type='button' onclick='closeForm(\"$file\")'>Отмена</button>";
+                    echo "</form>";
+                    echo "</li>";
                 }
                 echo "</ul>";
             } else {
@@ -71,6 +81,15 @@ $conn->close();
             ?>
         </div>
     </div>
+    <script>
+        function showForm(file) {
+            document.getElementById('comment-form-' + file).style.display = 'flex';
+        }
+
+        function closeForm(file) {
+            document.getElementById('comment-form-' + file).style.display = 'none';
+        }
+    </script>
     <style>
         * {
             -webkit-box-sizing: border-box;
@@ -88,20 +107,19 @@ $conn->close();
             display: none;
             flex-direction: column;
         }
-<!--    </style>-->
-<!--    <button onclick="showForm()">Добавить комментарий</button>-->
+<!--    </style>-->-->
+<!--   <button onclick="showForm()">Добавить комментарий</button>-->
 <!--    <form id="comment-form" action="" method="post">-->
 <!--        <input type="text" name="username" placeholder="mame">-->
-<!--        <textarea name="comments" id="" cols="30" rows="10" placeholder="Comments"></textarea>-->
+<!--       <textarea name="comments" id="" cols="30" rows="10" placeholder="Comments"></textarea>-->
 <!--        <input type="submit">-->
 <!--    </form>-->
 <!--    <form id="comment-form" action="" method="post">-->
-<!--        <input type="text" name="username" placeholder="mame">-->
-<!--        <textarea name="comments1" id="" cols="30" rows="10" placeholder="Comments"></textarea>-->
+<!--       <input type="text" name="username" placeholder="mame">-->
+<!--        <textarea name="comments" id="" cols="30" rows="10" placeholder="Comments"></textarea>-->
 <!--        <input type="submit">-->
 <!--        <button type="button" onclick="closeForm()">Отмена</button>-->
 <!--    </form>-->
-
 </div>
 </body>
 </html>
