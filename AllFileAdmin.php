@@ -17,8 +17,9 @@ if ($conn->connect_error) {
 $user_from_form = $_POST["username"];
 $comments_form = $_POST["comments"];
 $date = date("Y-m-d H:i:s");
+$file = $_POST["file"];
 
-$sql = "INSERT INTO comments (username, comments, date) VALUES ('$user_from_form', '$comments_form', '$date')";
+$sql = "INSERT INTO comments (username, comments, date, file) VALUES ('$user_from_form', '$comments_form', '$date', '$file')";
 
 
 // выполнение запроса
@@ -29,7 +30,7 @@ if ($conn->query($sql) === TRUE) {
 }
 
 // закрытие подключения к базе данных
-$conn->close();
+//$conn->close();
 
 ?>
 
@@ -68,11 +69,22 @@ $conn->close();
                     echo "<form id='comment-form-$file' action='' method='post' style='display: none;'>";
                     echo "<input type='text' name='username' placeholder='Имя пользователя'>";
                     echo "<textarea name='comments' placeholder='Комментарий'></textarea>";
-//                    echo "<input type='text' name='comments' placeholder='Comment'>";
+                    echo "<input type='hidden' name='file' value='$file'>";
                     echo "<button type='submit'>Отправить</button>";
                     echo "<button type='button' onclick='closeForm(\"$file\")'>Отмена</button>";
                     echo "</form>";
                     echo "</li>";
+                     // выбираем комментарии для текущего файла из базы данных
+                    $sql = "SELECT * FROM comments WHERE file='$file'";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                        echo "<h4>Комментарии:</h4>";
+                        $comments = "";
+                        while ($row = $result->fetch_assoc()) {
+                            $comments .= "<b>" . $row["username"] . "</b>: " . $row["comments"] . " (" . $row["date"] . ")<br>";
+                        }
+                        echo "<div>$comments</div>";
+                    }
                 }
                 echo "</ul>";
             } else {
@@ -107,19 +119,6 @@ $conn->close();
             display: none;
             flex-direction: column;
         }
-<!--    </style>-->-->
-<!--   <button onclick="showForm()">Добавить комментарий</button>-->
-<!--    <form id="comment-form" action="" method="post">-->
-<!--        <input type="text" name="username" placeholder="mame">-->
-<!--       <textarea name="comments" id="" cols="30" rows="10" placeholder="Comments"></textarea>-->
-<!--        <input type="submit">-->
-<!--    </form>-->
-<!--    <form id="comment-form" action="" method="post">-->
-<!--       <input type="text" name="username" placeholder="mame">-->
-<!--        <textarea name="comments" id="" cols="30" rows="10" placeholder="Comments"></textarea>-->
-<!--        <input type="submit">-->
-<!--        <button type="button" onclick="closeForm()">Отмена</button>-->
-<!--    </form>-->
 </div>
 </body>
 </html>
