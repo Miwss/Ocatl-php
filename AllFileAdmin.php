@@ -2,26 +2,45 @@
 
 // установка параметров подключения к базе данных
 $servername = "localhost";
-$username = "root";
+$username_1 = "root";
 $password = "";
 $dbname = "users";
 
 // создание подключения к базе данных
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username_1, $password, $dbname);
 
 // проверка наличия ошибок при подключении
 if ($conn->connect_error) {
     die("Ошибка подключения: " . $conn->connect_error);
 }
 
-$user_from_form = $_POST["username"];
-$comments_form = $_POST["comments"];
+if (isset($_POST["username"]))
+{
+    $user = $_POST["username"];
+}
+else
+{
+    $user = null;
+}
+//$comments_form = $_POST["comments"];
+
+if (isset($_POST["comments"]))
+{
+    $comments_form = $_POST["comments"];
+}
+else
+{
+    $comments_form = null;
+}
 $date = date("Y-m-d H:i:s");
-$file = $_POST["file"];
-
-$sql = "INSERT INTO comments (username, comments, date, file) VALUES ('$user_from_form', '$comments_form', '$date', '$file')";
-
-
+//$file = $_POST["file"];
+if (isset($_POST["file"])){
+    $file = $_POST["file"];
+}
+else{
+    $file = null;
+}
+$sql = "INSERT INTO comments (username, comments, date, file) VALUES ('$user', '$comments_form', '$date', '$file')";
 // выполнение запроса
 if ($conn->query($sql) === TRUE) {
     echo "Комментарий успешно сохранен в базе данных";
@@ -45,7 +64,7 @@ if ($conn->query($sql) === TRUE) {
 <body>
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-6"> <a href="javascript:history.back()" class="btn btn-primary mb-3">Назад</a>
             <?php
             $files = array();
             // получаем список файлов из директорий

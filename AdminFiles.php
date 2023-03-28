@@ -41,6 +41,11 @@ $files = array_merge($files_admin);
                 </div>
                 <button type="submit" class="btn btn-primary">Загрузить</button>
             </form>
+            <form action="AdminPanel.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                </div>
+                <button type="submit" class="btn btn-primary">Вернутся на страницу выбора</button>
+            </form>
             <?php
             if ($files) {
                 echo "<h2>Загруженные файлы:</h2>";

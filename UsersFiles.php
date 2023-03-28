@@ -46,19 +46,6 @@ $files = array_merge($files_admin);
                 </div>
                 <button type="submit" class="btn btn-primary">Вернутся на страницу выбора</button>
             </form>
-<!--            --><?php
-//            if ($files) {
-//                echo "<h2>Загруженные файлы:</h2>";
-//                echo "<ul>";
-//                foreach ($files as $file) {
-//                    $file_name = basename($file);
-//                    echo "<li><a href='$file'>$file_name</a></li>";
-//                }
-//                echo "</ul>";
-//            } else {
-//                echo "<p>Файлы пока не загружены</p>";
-//            }
-//            ?>
         </div>
     </div>
 </div>

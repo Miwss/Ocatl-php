@@ -8,7 +8,7 @@
 <body>
 <div class="button-container">
     <div class="container mt-5">
-        <div class="row justify-content-between">
+        <div class="row justify-content-center text-center">
             <div class="col-sm-4">
                 <form action="OS.php" method="post">
                     <button class="btn btn-primary btn-lg btn-block"><i class="fa fa-user-plus" ></i>Фича Админа</button>
@@ -22,6 +22,11 @@
             <div class="col-sm-4">
                 <form action="AllFileAdmin.php" method="post">
                     <button class="btn btn-info btn-lg btn-block"><i class="fa fa-sign-in"></i>Список всех файлов</button>
+                </form>
+            </div>
+            <div class="col-sm-4">
+                <form action="index.php" method="post" class="mt-5">
+                    <button class="btn btn-primary btn-lg btn-block"><i class="fa fa-sign-in"></i>Logout</button>
                 </form>
             </div>
         </div>
